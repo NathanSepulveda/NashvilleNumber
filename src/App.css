@@ -36,3 +36,105 @@
     transform: rotate(360deg);
   }
 }
+
+
+.fade-correct {
+  animation: fade-in-keyframes 1s;
+
+  animation-timing-function: ease-out; 
+}
+@keyframes fade-in-keyframes {
+0% {
+
+  background-color:rgba(145, 153,165, 1);
+
+  }
+
+  50% {
+
+    background-color:rgb(0,153, 0 );
+
+  
+    }
+
+
+  100% {
+
+    background-color:rgba(145, 153,165, 1);
+  }
+}
+
+.fade-wrong {
+  animation: fade-wrong-keyframes 1s;
+
+  animation-timing-function: ease-out; 
+}
+@keyframes fade-wrong-keyframes {
+0% {
+
+  background-color:rgba(145, 153,165, 1);
+
+  }
+
+  50% {
+
+    background-color:red;
+  
+    }
+
+
+  100% {
+
+    background-color:rgba(145, 153,165, 1);
+  }
+}
+
+.card-correct {
+  animation: card-correct-keyframes 1s;
+
+  animation-timing-function: ease-out; 
+}
+@keyframes card-correct-keyframes {
+0% {
+
+  border-color:black
+
+  }
+
+  50% {
+
+    border-color:rgb(0,153, 0 );
+  
+    }
+
+
+  100% {
+
+    border-color:black
+  }
+}
+
+.card-incorrect {
+  animation: card-incorrect-keyframes 1s;
+
+  animation-timing-function: ease-out; 
+}
+@keyframes card-incorrect-keyframes {
+0% {
+
+  border-color:black
+
+  }
+
+  50% {
+
+    border-color:red;
+  
+    }
+
+
+  100% {
+
+    border-color:black
+  }
+}
