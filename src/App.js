@@ -191,7 +191,7 @@ function App() {
   return (
     <div tw="flex flex-col h-screen bg-Softblack items-center px-3 py-3 text-white">
       <h1 tw="text-2xl my-2">Nashville Number System Quiz</h1>
-      <div tw="text-xl w-full lg:max-w-2xl my-4 flex justify-between">
+      <div tw="text-xl w-full lg:max-w-3xl my-4 flex justify-between">
         <div>
           <div>Key: {MusicKeys[currentKeyIndex].key}</div>
           <div>
