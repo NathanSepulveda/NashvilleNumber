@@ -200,8 +200,8 @@ function App() {
         </div>
 
         <div>
-          <div onClick={() => setShowModal(true)}>Settings</div>
-          <div onClick={handleReset}>Reset</div>
+          <div tw="cursor-pointer" onClick={() => setShowModal(true)}>Settings</div>
+          <div tw="cursor-pointer" onClick={handleReset}>Reset</div>
         </div>
       </div>
 
