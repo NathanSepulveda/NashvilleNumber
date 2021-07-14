@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.font-face-gm {
+  font-family: "Airstream";
+ }
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -40,13 +44,16 @@
 
 .fade-correct {
   animation: fade-in-keyframes 1s;
-
+  backdrop-filter: blur( 4.5px );
+  -webkit-backdrop-filter: blur( 4.5px );
   animation-timing-function: ease-out; 
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 @keyframes fade-in-keyframes {
 0% {
 
-  background-color:rgba(145, 153,165, 1);
+  background: rgba( 255, 255, 255, 0.05 );
 
   }
 
@@ -60,7 +67,7 @@
 
   100% {
 
-    background-color:rgba(145, 153,165, 1);
+    background: rgba( 255, 255, 255, 0.05 );
   }
 }
 
@@ -68,11 +75,18 @@
   animation: fade-wrong-keyframes 1s;
 
   animation-timing-function: ease-out; 
+
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4.5px );
+  -webkit-backdrop-filter: blur( 4.5px );
+
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 @keyframes fade-wrong-keyframes {
 0% {
 
-  background-color:rgba(145, 153,165, 1);
+  background: rgba( 255, 255, 255, 0.05 );
+
 
   }
 
@@ -85,7 +99,8 @@
 
   100% {
 
-    background-color:rgba(145, 153,165, 1);
+    background: rgba( 255, 255, 255, 0.05 );
+
   }
 }
 
@@ -137,4 +152,13 @@
 
     border-color:black
   }
+}
+
+.box {
+  background: rgba( 255, 255, 255, 0.07 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4.5px );
+  -webkit-backdrop-filter: blur( 4.5px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
 }

@@ -5,7 +5,7 @@ import './App.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'tailwindcss/dist/base.min.css';
-
+import './fonts/AIRSTREA.TTF';
 ReactDOM.render(
   <React.StrictMode>
     <App />

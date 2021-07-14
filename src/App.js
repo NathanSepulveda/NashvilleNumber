@@ -5,11 +5,15 @@ import { createPopper } from "@popperjs/core";
 import "./App.css";
 import { MusicKeys } from "./Keys";
 
-const ChordBox = tw.div`w-12 h-12 bg-gray-400 rounded-lg flex justify-center items-center cursor-pointer `;
+const ChordBox = tw.div`w-12 h-12 rounded-lg flex justify-center items-center cursor-pointer `;
 
 const KeyBox = tw.div`w-14 h-12 bg-gray-400 rounded-lg flex justify-center items-center cursor-pointer hover:bg-green-300 `;
 
-const SettingsBox = tw.div`w-32 h-12 bg-gray-400 rounded-lg flex justify-center items-center cursor-pointer  `;
+// const SettingsBox = (props) => (
+//   <div css={[tw`w-32 h-12 bg-gray-400 rounded-lg flex justify-center items-center cursor-pointer`, props.selected &&  tw`bg-green-400 text-white`]}>{props.children}</div>
+// )
+
+const SettingsBox = tw.div`w-36 h-12 bg-gray-400 rounded-lg flex justify-center items-center cursor-pointer md:hover:bg-green-300 `;
 
 function randomUniqueNum(range, outputCount) {
   let arr = [];
@@ -36,51 +40,41 @@ const SettingsModal = (props) => {
   return (
     <>
       <div tw="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-        <div tw="relative w-full my-6 mx-auto max-w-sm lg:max-w-2xl">
+        <div tw="relative w-full my-6 mx-auto max-w-sm lg:max-w-xl">
           {/*content*/}
           <div tw="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
             {/*header*/}
             <div tw="flex items-center   p-5 border-b border-solid border-gray-500 rounded-t">
               <h3 tw="text-3xl font-semibold text-black">Settings</h3>
-              <button
-                tw="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                onClick={() => props.setShowModal(false)}
-              >
-                <span tw="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                  ×
-                </span>
-              </button>
             </div>
             {/*body*/}
-            <div tw="relative p-4 flex-auto text-black">
-              <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
-                  Switch up the settings!
+            <div tw="relative p-4 text-black justify-items-center">
+              <p tw="my-2 text-lg leading-relaxed">
+                Change the key:
               </p>
-              
-  
-              <div tw="text-black grid  grid-cols-6 gap-2">
+
+              <div tw="text-black grid  grid-cols-6 gap-2 justify-items-center">
                 {MusicKeys.map((k, i) => (
                   <KeyBox
                     style={{
                       backgroundColor:
                         i === props.currentKeyIndex && "rgba(16, 185, 129,1)",
+                      color: i === props.currentKeyIndex && "white",
                     }}
+                    // selected={(i === props.currentKeyIndex)}
                     onClick={() => props.setCurrentKeyIndex(i)}
                   >
                     {k.key}
                   </KeyBox>
                 ))}
               </div>
-              <div tw="text-black flex gap-4 my-4">
-                {/* {Object.keys(GameModes).map((gm) => (
-                  <SettingsBox onClick={() => props.setGameMode(GameModes[gm])}>
-                    {gm}
-                  </SettingsBox>
-                ))} */}
+              <div tw="text-black flex   mt-6  ">
                 <SettingsBox
                   style={{
                     backgroundColor:
-                      props.gameMode === GameModes.TRAINING && "green",
+                      props.gameMode === GameModes.TRAINING &&
+                      "rgba(16, 185, 129,1)",
+                      color: props.gameMode === GameModes.TRAINING && "white"
                   }}
                   onClick={() =>
                     props.setGameMode((prev) =>
@@ -95,8 +89,11 @@ const SettingsModal = (props) => {
                 <SettingsBox
                   style={{
                     backgroundColor:
-                      props.numberMode === NumberModes.ROMAN && "green",
+                      props.numberMode === NumberModes.ROMAN &&
+                      "rgba(16, 185, 129,1)",
+                      color: props.numberMode === NumberModes.ROMAN && "white"
                   }}
+                  tw='mx-2 '
                   onClick={() =>
                     props.setNumberMode((prev) =>
                       prev === NumberModes.ROMAN
@@ -111,20 +108,13 @@ const SettingsModal = (props) => {
               {/* <Dropdown color="white" /> */}
             </div>
             {/*footer*/}
-            <div tw="flex items-center justify-end p-6 border-t border-solid border-gray-200 rounded-b">
+            <div tw="flex items-center justify-end py-4 border-t border-solid border-gray-200 rounded-b">
               <button
-                tw="text-red-500 bg-opacity-60 font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                tw="text-green-500 bg-opacity-60 font-bold uppercase px-4 py-1 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
                 onClick={() => props.setShowModal(false)}
               >
                 Close
-              </button>
-              <button
-                tw="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                type="button"
-                onClick={() => props.setShowModal(false)}
-              >
-                Save Changes
               </button>
             </div>
           </div>
@@ -153,7 +143,7 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [uniqueArray, setUniqueArray] = useState(randomUniqueNum(8, 8));
   const [gameMode, setGameMode] = useState(GameModes.KEY);
-  const [numberMode, setNumberMode] = useState(NumberModes.ROMAN);
+  const [numberMode, setNumberMode] = useState(NumberModes.ARABIC);
 
   const [selectedIdx, setSelectedIdx] = useState(null);
   const [questionCorrect, setQuestionCorrect] = useState(null);
@@ -178,19 +168,21 @@ function App() {
   };
 
   const handleAnimationEnd = () => {
-    setCurrentItem(getRandomInt());
+    let newItem = getRandomInt()
+    setCurrentItem(prev => prev === newItem ? getRandomInt() : newItem);
     setQuestionCorrect(null);
     setSelectedIdx(null);
   };
 
   const handleReset = () => {
     setTotalQuestions(0);
+    setCurrentItem(getRandomInt());
     setScore(0);
   };
 
   return (
-    <div tw="flex flex-col h-screen bg-Softblack items-center px-3 py-3 text-white">
-      <h1 tw="text-2xl my-2">Nashville Number System Quiz</h1>
+    <div tw="flex flex-col h-screen  items-center px-3  text-white">
+      <h1  tw="text-2xl my-2 py-3">Nashville Number System Quiz</h1>
       <div tw="text-xl w-full lg:max-w-3xl my-4 flex justify-between">
         <div>
           <div>Key: {MusicKeys[currentKeyIndex].key}</div>
@@ -200,22 +192,26 @@ function App() {
         </div>
 
         <div>
-          <div tw="cursor-pointer" onClick={() => setShowModal(true)}>Settings</div>
-          <div tw="cursor-pointer" onClick={handleReset}>Reset</div>
+          <div tw="cursor-pointer" onClick={() => setShowModal(true)}>
+            Settings
+          </div>
+          <div tw="cursor-pointer underline" onClick={handleReset}>
+            Reset
+          </div>
         </div>
       </div>
 
       <div tw="my-2 flex">
         <div
-          tw="text-blue-500 text-7xl w-60 bg-gray-300 h-96 rounded-xl flex justify-center items-center transform z-10 rotate-12 border border-black"
+          tw="text-blue-500 text-7xl w-60 bg-gray-300 h-96 rounded-xl flex justify-center items-center transform z-10 rotate-12 border-2 border-black"
           css={css({ transform: "rotate(10deg)" })}
         ></div>
-        <div tw="text-blue-500 text-7xl w-60 bg-gray-300 h-96 rounded-xl flex justify-center items-center transform rotate-3 z-20 absolute border border-black">
+        <div tw="text-blue-500 text-7xl w-60 bg-gray-300 h-96 rounded-xl flex justify-center items-center transform rotate-3 z-20 absolute border-2 border-black">
           {MusicKeys[currentKeyIndex].chords[currentItem].name}
         </div>
 
         <div
-          tw="text-blue-500 text-7xl w-60  h-96 rounded-xl flex justify-center items-center transform rotate-1 shadow-2xl z-40 absolute border-2 border-black bg-gray-300 "
+          tw="text-Softblack text-7xl w-60  h-96 rounded-xl flex justify-center items-center transform rotate-1 shadow-2xl z-40 absolute border-2 border-black bg-gray-300 "
           className={
             questionCorrect
               ? "card-correct"
@@ -235,17 +231,17 @@ function App() {
         </div>
 
         <div
-          tw="text-blue-500 text-7xl w-60 bg-gray-300 h-96 rounded-xl z-30 flex justify-center items-center transform absolute border border-black"
+          tw="text-Softblack text-7xl w-60 bg-gray-300 h-96 rounded-xl z-30 flex justify-center items-center transform absolute border-2 border-black"
           css={css({ transform: "rotate(-2deg)" })}
         >
           {MusicKeys[currentKeyIndex].chords[currentItem].name}
         </div>
       </div>
       {/* <span tw="flex h-3 w-3"> */}
-        {/* <span tw="animate-ping absolute inline-flex h-80 w-80 rounded-full bg-purple-400 opacity-75"></span>
+      {/* <span tw="animate-ping absolute inline-flex h-80 w-80 rounded-full bg-purple-400 opacity-75"></span>
   <span tw="animate-ping absolute inline-flex h-40 w-40 rounded-full bg-purple-600 opacity-20 top-20 right-60 z-0"></span> */}
-        {/* <span tw="animate-ping relative inline-flex h-80 w-80 rounded-full bg-purple-200 opacity-75"></span> */}
-        {/* <span tw="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span> */}
+      {/* <span tw="animate-ping relative inline-flex h-80 w-80 rounded-full bg-purple-200 opacity-75"></span> */}
+      {/* <span tw="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span> */}
       {/* </span> */}
       {/* // onClick={() => handleSelection(idx)}   */}
       <div tw="flex absolute bottom-10">
@@ -256,7 +252,7 @@ function App() {
                 ? "fade-correct"
                 : selectedIdx === idx && idx !== currentItem
                 ? "fade-wrong"
-                : ""
+                : "box"
             }
             key={idx}
             onClick={() => handleSelection(idx)}

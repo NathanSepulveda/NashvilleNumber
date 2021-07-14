@@ -1,6 +1,6 @@
 export const MusicKeys = [
     {
-      key: "Cmaj",
+      key: "C",
       chords: [
         { role: "1", name: "C", numeral: "I" },
         { role: "2m", name: "Dm", numeral: "ii" },
@@ -8,11 +8,11 @@ export const MusicKeys = [
         { role: "4", name: "F", numeral: "IV" },
         { role: "5", name: "G", numeral: "V" },
         { role: "6m", name: "Am", numeral: "vi" },
-        { role: "7dim", name: "Bdim", numeral: "viiº" },
+        { role: "7º", name: "Bº", numeral: "viiº" },
       ],
     },
     {
-      key: "Dbmaj",
+      key: "Db",
       chords: [
         { role: "1", name: "Db", numeral: "I" },
         { role: "2m", name: "Ebm", numeral: "ii" },
@@ -20,11 +20,11 @@ export const MusicKeys = [
         { role: "4", name: "Gb", numeral: "IV" },
         { role: "5", name: "Ab", numeral: "V" },
         { role: "6m", name: "Bbm", numeral: "vi" },
-        { role: "7dim", name: "Cdim", numeral: "viiº" },
+        { role: "7º", name: "Cº", numeral: "viiº" },
       ],
     },
     {
-      key: "Dmaj",
+      key: "D",
       chords: [
         { role: "1", name: "D", numeral: "I" },
         { role: "2m", name: "Em", numeral: "ii" },
@@ -32,11 +32,11 @@ export const MusicKeys = [
         { role: "4", name: "G", numeral: "IV" },
         { role: "5", name: "A", numeral: "V" },
         { role: "6m", name: "Bm", numeral: "vi" },
-        { role: "7dim", name: "C#dim", numeral: "viiº" },
+        { role: "7º", name: "C#º", numeral: "viiº" },
       ],
     },
     {
-      key: "Ebmaj",
+      key: "Eb",
       chords: [
         { role: "1", name: "Eb", numeral: "I" },
         { role: "2m", name: "Fm", numeral: "ii" },
@@ -44,11 +44,11 @@ export const MusicKeys = [
         { role: "4", name: "Ab", numeral: "IV" },
         { role: "5", name: "Bb", numeral: "V" },
         { role: "6m", name: "Cm", numeral: "vi" },
-        { role: "7dim", name: "Ddim", numeral: "viiº" },
+        { role: "7º", name: "Dº", numeral: "viiº" },
       ],
     },
     {
-      key: "Emaj",
+      key: "E",
       chords: [
         { role: "1", name: "E", numeral: "I" },
         { role: "2m", name: "F#m", numeral: "ii" },
@@ -56,11 +56,11 @@ export const MusicKeys = [
         { role: "4", name: "A", numeral: "IV" },
         { role: "5", name: "B", numeral: "V" },
         { role: "6m", name: "C#m", numeral: "vi" },
-        { role: "7dim", name: "D#dim", numeral: "viiº" },
+        { role: "7º", name: "D#º", numeral: "viiº" },
       ],
     },
     {
-      key: "Fmaj",
+      key: "F",
       chords: [
         { role: "1", name: "F", numeral: "I" },
         { role: "2m", name: "Gm", numeral: "ii" },
@@ -68,11 +68,11 @@ export const MusicKeys = [
         { role: "4", name: "Bb", numeral: "IV" },
         { role: "5", name: "C", numeral: "V" },
         { role: "6m", name: "Dm", numeral: "vi" },
-        { role: "7dim", name: "Edim", numeral: "viiº" },
+        { role: "7º", name: "Eº", numeral: "viiº" },
       ],
     },
     {
-      key: "F#maj",
+      key: "F#",
       chords: [
         { role: "1", name: "F#", numeral: "I" },
         { role: "2m", name: "G#m", numeral: "ii" },
@@ -80,11 +80,11 @@ export const MusicKeys = [
         { role: "4", name: "B", numeral: "IV" },
         { role: "5", name: "C#", numeral: "V" },
         { role: "6m", name: "Dm", numeral: "vi" },
-        { role: "7dim", name: "Fdim", numeral: "viiº" },
+        { role: "7º", name: "Fº", numeral: "viiº" },
       ],
     },
     {
-      key: "Gmaj",
+      key: "G",
       chords: [
         { role: "1", name: "G", numeral: "I" },
         { role: "2m", name: "Am", numeral: "ii" },
@@ -92,11 +92,11 @@ export const MusicKeys = [
         { role: "4", name: "C", numeral: "IV" },
         { role: "5", name: "D", numeral: "V" },
         { role: "6m", name: "Em", numeral: "vi" },
-        { role: "7dim", name: "F#dim", numeral: "viiº" },
+        { role: "7º", name: "F#º", numeral: "viiº" },
       ],
     },
     {
-      key: "Abmaj",
+      key: "Ab",
       chords: [
         { role: "1", name: "Ab", numeral: "I" },
         { role: "2m", name: "Bbm", numeral: "ii" },
@@ -104,11 +104,11 @@ export const MusicKeys = [
         { role: "4", name: "Db", numeral: "IV" },
         { role: "5", name: "Eb", numeral: "V" },
         { role: "6m", name: "Fm", numeral: "vi" },
-        { role: "7dim", name: "Gdim", numeral: "viiº" },
+        { role: "7º", name: "Gº", numeral: "viiº" },
       ],
     },
     {
-      key: "Amaj",
+      key: "A",
       chords: [
         { role: "1", name: "A", numeral: "I" },
         { role: "2m", name: "Bm", numeral: "ii" },
@@ -116,11 +116,11 @@ export const MusicKeys = [
         { role: "4", name: "D", numeral: "IV" },
         { role: "5", name: "E", numeral: "V" },
         { role: "6m", name: "F#m", numeral: "vi" },
-        { role: "7dim", name: "G#dim", numeral: "viiº" },
+        { role: "7º", name: "G#º", numeral: "viiº" },
       ],
     },
     {
-      key: "Bbmaj",
+      key: "Bb",
       chords: [
         { role: "1", name: "Bb", numeral: "I" },
         { role: "2m", name: "Cm", numeral: "ii" },
@@ -128,11 +128,11 @@ export const MusicKeys = [
         { role: "4", name: "Eb", numeral: "IV" },
         { role: "5", name: "F", numeral: "V" },
         { role: "6m", name: "Gm", numeral: "vi" },
-        { role: "7dim", name: "Adim", numeral: "viiº" },
+        { role: "7º", name: "Aº", numeral: "viiº" },
       ],
     },
     {
-      key: "Bmaj",
+      key: "B",
       chords: [
         { role: "1", name: "B", numeral: "I" },
         { role: "2m", name: "C#m", numeral: "ii" },
@@ -140,7 +140,7 @@ export const MusicKeys = [
         { role: "4", name: "E", numeral: "IV" },
         { role: "5", name: "F#", numeral: "V" },
         { role: "6m", name: "G#m", numeral: "vi" },
-        { role: "7dim", name: "A#dim", numeral: "viiº" },
+        { role: "7º", name: "A#º", numeral: "viiº" },
       ],
     },
   
