@@ -198,6 +198,11 @@ function App() {
   }, []);
 
   const handleSelection = (idx) => {
+
+    if (selectedIdx) {
+      return
+    }
+
     setSelectedIdx(idx);
     if (idx === currentItem) {
       // alert("correct");
