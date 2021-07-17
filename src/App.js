@@ -45,7 +45,7 @@ const SettingsModal = (props) => {
           <div tw="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
             {/*header*/}
             <div tw="flex items-center   p-5 border-b border-solid border-gray-500 rounded-t">
-              <h3 tw="text-3xl font-semibold text-black">Settings</h3>
+              <h3 className="settingsHeader" tw="text-3xl font-semibold text-black">Settings</h3>
             </div>
             {/*body*/}
             <div tw="relative p-4 text-black justify-items-center">
@@ -135,6 +135,51 @@ const NumberModes = {
   ROMAN: "ROMAN",
 };
 
+
+
+const Timer = (props) => {
+  const {initialMinute = 0,initialSeconds = 0} = props;
+  const [ minutes, setMinutes ] = useState(1);
+  const [seconds, setSeconds ] =  useState(30);
+  const [active, setActive] = useState(false)
+  useEffect(()=>{
+    if (active) {
+      let myInterval = setInterval(() => {
+        if (seconds > 0) {
+            setSeconds(seconds - 1);
+        }
+        if (seconds === 0) {
+            if (minutes === 0) {
+                clearInterval(myInterval)
+            } else {
+                setMinutes(minutes - 1);
+                setSeconds(59);
+            }
+        } 
+    }, 1000)
+    return ()=> {
+        clearInterval(myInterval);
+      };
+    }
+
+
+  });
+
+
+
+  return (
+      <div onClick={() => setActive(true)}>
+      { minutes === 0 && seconds === 0
+          ? <div>yo</div>
+          : <h1> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</h1> 
+      }
+      </div>
+  )
+}
+
+
+
+
 function App() {
   const [currentItem, setCurrentItem] = useState(getRandomInt());
   const [score, setScore] = useState(0);
@@ -182,7 +227,7 @@ function App() {
 
   return (
     <div tw="flex flex-col h-screen  items-center px-3  text-white">
-      <h1  tw="text-2xl my-2 py-3">Nashville Number System Quiz</h1>
+      <h1 className='neonText'  tw="text-2xl my-2 py-3">Nashville Number System Quiz</h1>
       <div tw="text-xl w-full lg:max-w-3xl my-4 flex justify-between">
         <div>
           <div>Key: {MusicKeys[currentKeyIndex].key}</div>
@@ -198,10 +243,12 @@ function App() {
           <div tw="cursor-pointer underline" onClick={handleReset}>
             Reset
           </div>
+          {/* <Timer initialMinute={1} initialSeconds={30}/> */}
         </div>
       </div>
 
-      <div tw="my-2 flex">
+      <div tw="my-2 flex " className='card-cont cardText'>
+        
         <div
           tw="text-blue-500 text-7xl w-60 bg-gray-300 h-96 rounded-xl flex justify-center items-center transform z-10 rotate-12 border-2 border-black"
           css={css({ transform: "rotate(10deg)" })}
@@ -211,7 +258,7 @@ function App() {
         </div>
 
         <div
-          tw="text-Softblack text-7xl w-60  h-96 rounded-xl flex justify-center items-center transform rotate-1 shadow-2xl z-40 absolute border-2 border-black bg-gray-300 "
+          tw=" text-Softblack text-7xl w-60  h-96 rounded-xl flex justify-center items-center transform rotate-1  z-40 absolute border-2 border-black bg-gray-300 "
           className={
             questionCorrect
               ? "card-correct"
@@ -220,7 +267,7 @@ function App() {
               : ""
           }
         >
-          <div tw="absolute top-4 left-2 text-lg text-black">
+          <div tw="absolute top-4 left-2 text-lg text-black" >
             Key: {MusicKeys[currentKeyIndex].key}
           </div>
           {gameMode === GameModes.KEY

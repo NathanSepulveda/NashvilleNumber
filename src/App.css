@@ -155,10 +155,59 @@
 }
 
 .box {
-  background: rgba( 255, 255, 255, 0.07 );
+  background: rgba( 255, 255, 255, 0.08 );
   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
   backdrop-filter: blur( 4.5px );
   -webkit-backdrop-filter: blur( 4.5px );
   border-radius: 10px;
   border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+
+.card-cont {
+  animation: bounce 3s infinite;
+  box-shadow: 0px 80px 80px -45px rgba(0, 0, 0, 1);
+
+
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(2%);
+    animationTimingFunction: cubic-bezier(0.5, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+
+    animationTimingFunction: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+
+.neonText {
+  color: #fff;
+  font-family: 'Smokum', cursive;
+  font-size: 34px !important;
+   
+  text-shadow:
+  0 0 4px #fff,
+  0 0 10px #fff,
+  0 0 18px #fff,
+  0 0 38px #f09,
+  0 0 73px #f09,
+  0 0 80px #f09,
+  0 0 94px #f09,
+  0 0 140px #f09;
+}
+
+
+
+    
+
+.cardText {
+  font-family: 'Smokum', cursive ;
+}
+
+.settingsHeader {
+  font-family: 'Smokum', cursive ;
 }

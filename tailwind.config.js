@@ -6,17 +6,17 @@ module.exports = {
   presets: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {
-      keyframes: {
-        wiggle: {
-          "0%, 100%": { transform: "rotate(-3deg)" },
-          "50%": { transform: "rotate(3deg)" }
-        }
-      },
-      animation: {
-        wiggle: "wiggle 200ms ease-in-out"
-      }
-    },
+    // extend: {
+    //   keyframes: {
+    //     wiggle: {
+    //       "0%, 100%": { transform: "rotate(-3deg)" },
+    //       "50%": { transform: "rotate(3deg)" }
+    //     }
+    //   },
+    //   animation: {
+    //     wiggle: "wiggle 200ms ease-in-out"
+    //   }
+    // },
     screens: {
       sm: '640px',
       md: '768px',
