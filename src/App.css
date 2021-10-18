@@ -218,11 +218,13 @@
 
 }
 
-/* .flash-card{
+.flash-card{
   height: 45vh;
   width: 60vw;
   max-width: 250px;
-} */
+  /* height: calc(var(--size) * var(--scale)); */
+  width: calc(45vh * .72);
+}
 
     
 

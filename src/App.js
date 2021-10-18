@@ -290,9 +290,35 @@ function App() {
 
   useEffect(() => {
     setCurrentItem(uniqueArray[0]);
-    const screenHeight = document.body.clientHeight
-    setCardHeight(screenHeight * .48)
+    // const screenHeight = document.body.clientHeight
+    // setCardHeight(screenHeight * .48)
   }, []);
+
+
+//     const [dimensions, setDimensions] = React.useState({ 
+//     height: document.body.clientHeight * .48,
+//     width: window.innerWidth
+//   })
+
+
+  
+//   React.useEffect(() => {
+//     function handleResize() {
+//       setDimensions({
+//         height: document.body.clientHeight * .48,
+//         width: window.innerWidth
+//       })
+    
+// }
+
+//     handleResize()
+//     window.addEventListener('resize', handleResize)
+
+//     return _ => {
+//       window.removeEventListener('resize', handleResize)
+    
+// }
+//   })
 
   const handleSelection = (idx) => {
 
@@ -368,7 +394,7 @@ function App() {
         
         <FlashCard
           tw="transform z-10 rotate-12"
-          style={{height: `${cardHeight}px`, width : `${cardHeight * .68}px`}}
+          // style={{height: `${dimensions.height}px`, width : `${dimensions.height * .68}px`}}
           className="flash-card"
           css={css({ transform: "rotate(10deg)" })}
         ></FlashCard>
@@ -378,7 +404,7 @@ function App() {
 
         <FlashCard
           tw="transform rotate-1  z-40 absolute "
-          style={{height: `${cardHeight}px`, width : `${cardHeight * .68}px`}}
+          // style={{height: `${dimensions.height}px`, width : `${dimensions.height * .68}px`}}
           className={
             questionCorrect
               ? "card-correct flash-card"
@@ -398,7 +424,7 @@ function App() {
         </FlashCard>
 
         <FlashCard
-          style={{height: `${cardHeight}px`, width : `${cardHeight * .68}px`}}
+// style={{height: `${dimensions.height}px`, width : `${dimensions.height * .68}px`}}
           tw="transform absolute"
           className="flash-card"
 
