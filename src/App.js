@@ -286,7 +286,7 @@ function App() {
   const [questionCorrect, setQuestionCorrect] = useState(null);
   const [timerState, setTimerState] = useState(TimerStates.INACTIVE)
 
-  const [cardHeight, setCardHeight] = useState(120)
+  // const [cardHeight, setCardHeight] = useState(120)
 
   useEffect(() => {
     setCurrentItem(uniqueArray[0]);
