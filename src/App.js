@@ -1,19 +1,69 @@
 /** @jsxImportSource @emotion/react */
 import tw, { css, styled } from "twin.macro";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useReducer } from "react";
 import { createPopper } from "@popperjs/core";
 import "./App.css";
 import { MusicKeys } from "./Keys";
+import LogRocket from 'logrocket';
 
-const ChordBox = tw.div`w-12 h-12 rounded-lg flex justify-center items-center cursor-pointer `;
+import { keyframes } from 'styled-components'
+const breatheAnimation = keyframes`
+ 0% { opacity: 0.8;}
+ 50% { opacity: 0.3; }
+ 100% {  opacity: 0.8; }
+`
+
+
+const ChordBox = tw.div`rounded-lg flex justify-center items-center cursor-pointer `;
 
 const KeyBox = tw.div`w-14 h-12 bg-gray-400 rounded-lg flex justify-center items-center cursor-pointer hover:bg-green-300 `;
+
+const FlashCard = tw.div`text-Softblack text-7xl  rounded-xl flex justify-center items-center border-2 border-black bg-white `
 
 // const SettingsBox = (props) => (
 //   <div css={[tw`w-32 h-12 bg-gray-400 rounded-lg flex justify-center items-center cursor-pointer`, props.selected &&  tw`bg-green-400 text-white`]}>{props.children}</div>
 // )
 
 const SettingsBox = tw.div`w-36 h-12 bg-gray-400 rounded-lg flex justify-center items-center cursor-pointer md:hover:bg-green-300 `;
+
+function randomIntFromInterval(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+const Block = styled.div`
+width: 10px;
+height : 10px;
+
+ background-color:  green;
+ opacity: ${(props) => props.dark / 100};
+ /* animation-name: ${breatheAnimation};
+ animation-duration: 2s;
+ animation-iteration-count: infinite; */
+ /* border: 0.2px solid black; */
+  transition: .2s;
+ &:hover {
+ background-color: lightblue;
+ /* opacity: 1; */
+
+ }
+
+`
+
+/* const Block = props => {
+  return (
+    <span style={{"width" : props.count * 24, "height" : "24px", "backgroundColor": "green" }}>
+
+    </span>
+  )
+} */
+
+const Space = props => {
+  return (
+    <span style={{"width" : props.count * 24, "height" : "24px"}}>
+
+    </span>
+  )
+}
 
 function randomUniqueNum(range, outputCount) {
   let arr = [];
@@ -35,6 +85,40 @@ function randomUniqueNum(range, outputCount) {
 function getRandomInt() {
   return Math.floor(Math.random() * 7);
 }
+
+
+const ScoreModal = (props) => {
+  return (
+    <>
+      <div tw="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+        <div tw="relative w-full my-6 mx-auto max-w-sm lg:max-w-xl">
+          {/*content*/}
+          <div tw="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+            {/*header*/}
+            <div tw="flex items-center   p-5 border-b border-solid border-gray-500 rounded-t">
+              <h3 className="settingsHeader" tw="text-3xl font-semibold text-black">High Score</h3>
+            </div>
+            Hey good job your score was __
+            <div>
+              hi
+            </div>
+            {/*footer*/}
+            <div tw="flex items-center justify-end py-4 border-t border-solid border-gray-200 rounded-b">
+              <button
+                tw="text-green-500 bg-opacity-60 font-bold uppercase px-4 py-1 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                type="button"
+                onClick={() => props.setTimerState(TimerStates.INACTIVE)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div tw="opacity-25 fixed inset-0 z-40 bg-black"></div>
+    </>
+  );
+};
 
 const SettingsModal = (props) => {
   return (
@@ -135,22 +219,28 @@ const NumberModes = {
   ROMAN: "ROMAN",
 };
 
+const TimerStates = {
+  INACTIVE: "INACTIVE",
+  ACTIVE: "ACTIVE",
+  FINISHED: "FINISHED"
+}
+
 
 
 const Timer = (props) => {
   const {initialMinute = 0,initialSeconds = 0} = props;
-  const [ minutes, setMinutes ] = useState(1);
-  const [seconds, setSeconds ] =  useState(30);
-  const [active, setActive] = useState(false)
+  const [ minutes, setMinutes ] = useState(0);
+  const [seconds, setSeconds ] =  useState(5);
   useEffect(()=>{
-    if (active) {
+    if (props.timerState === TimerStates.ACTIVE) {
       let myInterval = setInterval(() => {
         if (seconds > 0) {
             setSeconds(seconds - 1);
         }
-        if (seconds === 0) {
+        if (seconds === 1) {
             if (minutes === 0) {
                 clearInterval(myInterval)
+                props.setTimerState(TimerStates.FINISHED)
             } else {
                 setMinutes(minutes - 1);
                 setSeconds(59);
@@ -159,6 +249,8 @@ const Timer = (props) => {
     }, 1000)
     return ()=> {
         clearInterval(myInterval);
+
+        // props.setTimerState(TimerStates.FINISHED)
       };
     }
 
@@ -168,8 +260,8 @@ const Timer = (props) => {
 
 
   return (
-      <div onClick={() => setActive(true)}>
-      { minutes === 0 && seconds === 0
+      <div onClick={() => props.setTimerState(TimerStates.ACTIVE)}>
+      { props.timerState === TimerStates.FINISHED
           ? <div>yo</div>
           : <h1> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</h1> 
       }
@@ -192,9 +284,14 @@ function App() {
 
   const [selectedIdx, setSelectedIdx] = useState(null);
   const [questionCorrect, setQuestionCorrect] = useState(null);
+  const [timerState, setTimerState] = useState(TimerStates.INACTIVE)
+
+  const [cardHeight, setCardHeight] = useState(120)
 
   useEffect(() => {
     setCurrentItem(uniqueArray[0]);
+    const screenHeight = document.body.clientHeight
+    setCardHeight(screenHeight * .48)
   }, []);
 
   const handleSelection = (idx) => {
@@ -205,11 +302,9 @@ function App() {
 
     setSelectedIdx(idx);
     if (idx === currentItem) {
-      // alert("correct");
       setScore((prev) => prev + 1);
       setQuestionCorrect(true);
     } else {
-      // alert("incorrect");
       setQuestionCorrect(false);
     }
     setTotalQuestions((prev) => prev + 1);
@@ -230,9 +325,24 @@ function App() {
     setScore(0);
   };
 
+  const TimerDisplay = () => {
+    if (timerState === TimerStates.INACTIVE) {
+      return (<button tw='underline' onClick={() => setTimerState(TimerStates.ACTIVE)}>Start Timed Mode</button>)
+    } else if (timerState === TimerStates.ACTIVE) {
+      return <Timer initialMinute={1} initialSeconds={30} setTimerState={setTimerState} timerState={timerState}/>
+      
+    } else {
+      return "🤠"
+    }
+  }
+
+  useEffect(() => {
+    LogRocket.init('lrd9dg/nashflash');
+  }, [])
+
   return (
     <div tw="flex flex-col h-screen  items-center px-3  text-white">
-      <h1 className='neonText'  tw="text-2xl my-2 py-3">Nashville Number System Quiz</h1>
+      <h1 className='neonText'  tw="text-xl md:text-2xl my-2 py-3">Nashville Number System Quiz</h1>
       <div tw="text-xl w-full lg:max-w-3xl my-4 flex justify-between">
         <div>
           <div>Key: {MusicKeys[currentKeyIndex].key}</div>
@@ -241,35 +351,40 @@ function App() {
           </div>
         </div>
 
-        <div>
+        <div tw='text-right'>
           <div tw="cursor-pointer" onClick={() => setShowModal(true)}>
             Settings
           </div>
           <div tw="cursor-pointer underline" onClick={handleReset}>
             Reset
           </div>
-          {/* <Timer initialMinute={1} initialSeconds={30}/> */}
+          {/* <TimerDisplay tw='cursor-pointer underline'/> */}
+          {/* <Timer initialMinute={1} initialSeconds={30} setTimerState={setTimerState} timerState={timerState}/> */}
+
         </div>
       </div>
 
-      <div tw="my-2 flex " className='card-cont cardText'>
+      <div tw="mt-2 flex " className='card-cont cardText'>
         
-        <div
-          tw="text-blue-500 text-7xl w-60 bg-gray-300 h-96 rounded-xl flex justify-center items-center transform z-10 rotate-12 border-2 border-black"
+        <FlashCard
+          tw="transform z-10 rotate-12"
+          style={{height: `${cardHeight}px`, width : `${cardHeight * .68}px`}}
+          className="flash-card"
           css={css({ transform: "rotate(10deg)" })}
-        ></div>
-        <div tw="text-blue-500 text-7xl w-60 bg-gray-300 h-96 rounded-xl flex justify-center items-center transform rotate-3 z-20 absolute border-2 border-black">
-          {MusicKeys[currentKeyIndex].chords[currentItem].name}
-        </div>
+        ></FlashCard>
+        <FlashCard tw=" transform rotate-3 z-20 absolute">
 
-        <div
-          tw=" text-Softblack text-7xl w-60  h-96 rounded-xl flex justify-center items-center transform rotate-1  z-40 absolute border-2 border-black bg-gray-300 "
+        </FlashCard>
+
+        <FlashCard
+          tw="transform rotate-1  z-40 absolute "
+          style={{height: `${cardHeight}px`, width : `${cardHeight * .68}px`}}
           className={
             questionCorrect
-              ? "card-correct"
+              ? "card-correct flash-card"
               : questionCorrect === false
-              ? "card-incorrect"
-              : ""
+              ? "card-incorrect flash-card"
+              : "flash-card"
           }
         >
           <div tw="absolute top-4 left-2 text-lg text-black" >
@@ -280,31 +395,29 @@ function App() {
             : numberMode === NumberModes.ARABIC
             ? MusicKeys[currentKeyIndex].chords[currentItem].role
             : MusicKeys[currentKeyIndex].chords[currentItem].numeral}
-        </div>
+        </FlashCard>
 
-        <div
-          tw="text-Softblack text-7xl w-60 bg-gray-300 h-96 rounded-xl z-30 flex justify-center items-center transform absolute border-2 border-black"
+        <FlashCard
+          style={{height: `${cardHeight}px`, width : `${cardHeight * .68}px`}}
+          tw="transform absolute"
+          className="flash-card"
+
           css={css({ transform: "rotate(-2deg)" })}
         >
           {MusicKeys[currentKeyIndex].chords[currentItem].name}
-        </div>
+        </FlashCard>
+        
       </div>
-      {/* <span tw="flex h-3 w-3"> */}
-      {/* <span tw="animate-ping absolute inline-flex h-80 w-80 rounded-full bg-purple-400 opacity-75"></span>
-  <span tw="animate-ping absolute inline-flex h-40 w-40 rounded-full bg-purple-600 opacity-20 top-20 right-60 z-0"></span> */}
-      {/* <span tw="animate-ping relative inline-flex h-80 w-80 rounded-full bg-purple-200 opacity-75"></span> */}
-      {/* <span tw="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span> */}
-      {/* </span> */}
-      {/* // onClick={() => handleSelection(idx)}   */}
       <div tw="flex absolute bottom-10">
         {MusicKeys[currentKeyIndex].chords.map((chord, idx) => (
           <ChordBox
             className={
-              selectedIdx === idx && idx === currentItem
-                ? "fade-correct"
+              
+              (selectedIdx === idx && idx === currentItem
+                ? "fade-correct chord-box"
                 : selectedIdx === idx && idx !== currentItem
-                ? "fade-wrong"
-                : "box"
+                ? "fade-wrong chord-box"
+                : "box chord-box")
             }
             key={idx}
             onClick={() => handleSelection(idx)}
@@ -319,6 +432,10 @@ function App() {
           </ChordBox>
         ))}
       </div>
+      {
+        timerState === TimerStates.FINISHED && <ScoreModal setTimerState={setTimerState}></ScoreModal>
+      }
+
       {showModal ? (
         <SettingsModal
           setShowModal={setShowModal}
