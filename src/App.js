@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import tw, { css, styled } from "twin.macro";
-import React, { useState, useEffect, useRef, useReducer } from "react";
-import { createPopper } from "@popperjs/core";
+import tw, { css } from "twin.macro";
+import { useState, useEffect } from "react";
 import "./App.css";
 import { MusicKeys } from "./Keys";
 import LogRocket from 'logrocket';
@@ -18,52 +17,16 @@ const ChordBox = tw.div`rounded-lg flex justify-center items-center cursor-point
 
 const KeyBox = tw.div`w-14 h-12 bg-gray-400 rounded-lg flex justify-center items-center cursor-pointer hover:bg-green-300 `;
 
-const FlashCard = tw.div`text-Softblack text-7xl  rounded-xl flex justify-center items-center border-2 border-black bg-white `
+const FlashCard = tw.div`text-Softblack text-7xl  rounded-xl flex justify-center items-center `
 
-// const SettingsBox = (props) => (
-//   <div css={[tw`w-32 h-12 bg-gray-400 rounded-lg flex justify-center items-center cursor-pointer`, props.selected &&  tw`bg-green-400 text-white`]}>{props.children}</div>
-// )
 
 const SettingsBox = tw.div`w-36 h-12 bg-gray-400 rounded-lg flex justify-center items-center cursor-pointer md:hover:bg-green-300 `;
 
-function randomIntFromInterval(min, max) { // min and max included 
-  return Math.floor(Math.random() * (max - min + 1) + min)
-}
 
-const Block = styled.div`
-width: 10px;
-height : 10px;
 
- background-color:  green;
- opacity: ${(props) => props.dark / 100};
- /* animation-name: ${breatheAnimation};
- animation-duration: 2s;
- animation-iteration-count: infinite; */
- /* border: 0.2px solid black; */
-  transition: .2s;
- &:hover {
- background-color: lightblue;
- /* opacity: 1; */
 
- }
 
-`
 
-/* const Block = props => {
-  return (
-    <span style={{"width" : props.count * 24, "height" : "24px", "backgroundColor": "green" }}>
-
-    </span>
-  )
-} */
-
-const Space = props => {
-  return (
-    <span style={{"width" : props.count * 24, "height" : "24px"}}>
-
-    </span>
-  )
-}
 
 function randomUniqueNum(range, outputCount) {
   let arr = [];
@@ -189,7 +152,7 @@ const SettingsModal = (props) => {
                   Roman Numerals
                 </SettingsBox>
               </div>
-              {/* <Dropdown color="white" /> */}
+
             </div>
             {/*footer*/}
             <div tw="flex items-center justify-end py-4 border-t border-solid border-gray-200 rounded-b">
@@ -229,8 +192,8 @@ const TimerStates = {
 
 const Timer = (props) => {
   const {initialMinute = 0,initialSeconds = 0} = props;
-  const [ minutes, setMinutes ] = useState(0);
-  const [seconds, setSeconds ] =  useState(5);
+  const [ minutes, setMinutes ] = useState(1);
+  const [seconds, setSeconds ] =  useState(25);
   useEffect(()=>{
     if (props.timerState === TimerStates.ACTIVE) {
       let myInterval = setInterval(() => {
@@ -254,10 +217,7 @@ const Timer = (props) => {
       };
     }
 
-
   });
-
-
 
   return (
       <div onClick={() => props.setTimerState(TimerStates.ACTIVE)}>
@@ -290,35 +250,13 @@ function App() {
 
   useEffect(() => {
     setCurrentItem(uniqueArray[0]);
-    // const screenHeight = document.body.clientHeight
-    // setCardHeight(screenHeight * .48)
+    LogRocket.init('lrd9dg/nashflash');
+
+
   }, []);
 
 
-//     const [dimensions, setDimensions] = React.useState({ 
-//     height: document.body.clientHeight * .48,
-//     width: window.innerWidth
-//   })
 
-
-  
-//   React.useEffect(() => {
-//     function handleResize() {
-//       setDimensions({
-//         height: document.body.clientHeight * .48,
-//         width: window.innerWidth
-//       })
-    
-// }
-
-//     handleResize()
-//     window.addEventListener('resize', handleResize)
-
-//     return _ => {
-//       window.removeEventListener('resize', handleResize)
-    
-// }
-//   })
 
   const handleSelection = (idx) => {
 
@@ -351,20 +289,17 @@ function App() {
     setScore(0);
   };
 
-  const TimerDisplay = () => {
-    if (timerState === TimerStates.INACTIVE) {
-      return (<button tw='underline' onClick={() => setTimerState(TimerStates.ACTIVE)}>Start Timed Mode</button>)
-    } else if (timerState === TimerStates.ACTIVE) {
-      return <Timer initialMinute={1} initialSeconds={30} setTimerState={setTimerState} timerState={timerState}/>
+  // const TimerDisplay = () => {
+  //   if (timerState === TimerStates.INACTIVE) {
+  //     return (<button tw='underline' onClick={() => setTimerState(TimerStates.ACTIVE)}>Start Timed Mode</button>)
+  //   } else if (timerState === TimerStates.ACTIVE) {
+  //     return <Timer initialMinute={1} initialSeconds={30} setTimerState={setTimerState} timerState={timerState}/>
       
-    } else {
-      return "🤠"
-    }
-  }
+  //   } else {
+  //     return "🤠"
+  //   }
+  // }
 
-  useEffect(() => {
-    LogRocket.init('lrd9dg/nashflash');
-  }, [])
 
   return (
     <div tw="flex flex-col h-screen  items-center px-3  text-white">
@@ -394,7 +329,6 @@ function App() {
         
         <FlashCard
           tw="transform z-10 rotate-12"
-          // style={{height: `${dimensions.height}px`, width : `${dimensions.height * .68}px`}}
           className="flash-card"
           css={css({ transform: "rotate(10deg)" })}
         ></FlashCard>
@@ -404,7 +338,6 @@ function App() {
 
         <FlashCard
           tw="transform rotate-1  z-40 absolute "
-          // style={{height: `${dimensions.height}px`, width : `${dimensions.height * .68}px`}}
           className={
             questionCorrect
               ? "card-correct flash-card"
@@ -413,7 +346,7 @@ function App() {
               : "flash-card"
           }
         >
-          <div tw="absolute top-4 left-2 text-lg text-black" >
+          <div tw="absolute top-6 right-6 text-lg text-black" >
             Key: {MusicKeys[currentKeyIndex].key}
           </div>
           {gameMode === GameModes.KEY
@@ -424,7 +357,6 @@ function App() {
         </FlashCard>
 
         <FlashCard
-// style={{height: `${dimensions.height}px`, width : `${dimensions.height * .68}px`}}
           tw="transform absolute"
           className="flash-card"
 

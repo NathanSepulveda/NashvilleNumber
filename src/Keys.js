@@ -79,7 +79,7 @@ export const MusicKeys = [
         { role: "3m", name: "A#m", numeral: "iii" },
         { role: "4", name: "B", numeral: "IV" },
         { role: "5", name: "C#", numeral: "V" },
-        { role: "6m", name: "Dm", numeral: "vi" },
+        { role: "6m", name: "D#m", numeral: "vi" },
         { role: "7º", name: "Fº", numeral: "viiº" },
       ],
     },
